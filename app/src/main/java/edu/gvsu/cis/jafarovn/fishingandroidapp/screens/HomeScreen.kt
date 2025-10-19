@@ -15,9 +15,11 @@ import androidx.compose.ui.unit.sp
 import edu.gvsu.cis.jafarovn.fishingandroidapp.MapViewModel
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, mapViewModel: MapViewModel, onNavigateToCaughtFish: () -> Unit)
+fun HomeScreen(modifier: Modifier = Modifier, mapViewModel: MapViewModel,
+               onNavigateToCaughtFish: () -> Unit
+)
 {
-
+    Text("This is the HomeScreen")
 }
 
 

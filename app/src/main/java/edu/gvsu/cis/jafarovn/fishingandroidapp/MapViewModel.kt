@@ -1,5 +1,7 @@
 package edu.gvsu.cis.jafarovn.fishingandroidapp
 
-class MapViewModel {
-    val empt = " "
+import androidx.lifecycle.ViewModel
+
+class MapViewModel: ViewModel() {
+
 }
