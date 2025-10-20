@@ -32,29 +32,22 @@ fun LeaderBoardScreen(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.fillMaxSize(), // Make the column fill the screen
-        horizontalAlignment = Alignment.CenterHorizontally // Center its children horizontally
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // First Row (for the logo)
-        Row(
+        Column (
             modifier = Modifier
                 .background(Color.LightGray)
-                .height(175.dp)
+                .height(160.dp)
+                .fillMaxWidth()
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(),
-                contentAlignment = Alignment.Center
-            ) {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { onNavigateToMain() },
+                        .clickable( onClick = onNavigateToMain),
                     painter = painterResource(id = R.drawable.fishook_logo),
                     contentDescription = "FisHook App Logo",
                 )
-            }
         }
     }
 }

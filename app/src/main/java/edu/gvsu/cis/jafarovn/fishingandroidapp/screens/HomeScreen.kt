@@ -47,13 +47,16 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally // Center its children horizontally
     ) {
         // First Row (for the logo)
-        Row (modifier = Modifier
-            .background(Color.LightGray)
-            .height(175.dp)
+        Column (
+            modifier = Modifier
+                .background(Color.LightGray)
+                .height(160.dp) // The height might need adjustment depending on the content
+                .fillMaxWidth() // Column often needs to fill width to center content
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxHeight(),
+                    .weight(1f)
+                    .fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
@@ -65,8 +68,10 @@ fun HomeScreen(
             }
             Box(
                 modifier = Modifier
-                    .fillMaxHeight(),
-                contentAlignment = Alignment.BottomCenter
+                    .weight(0.5f) // The text usually needs less space than the image
+                    .fillMaxWidth()
+                    .padding(bottom = 12.dp),
+                contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "Welcome to FisHook",
