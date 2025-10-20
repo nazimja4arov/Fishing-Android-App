@@ -28,11 +28,13 @@ import edu.gvsu.cis.jafarovn.fishingandroidapp.UserViewModel
 
 @Composable
 fun UserProfileScreen(
-    modifier: Modifier = Modifier,
     mapViewModel: MapViewModel,
-    onNavigateToMain: () -> Unit,
     userViewModel: UserViewModel,
-    onNavigateToAddFish: () -> Unit
+    onNavigateToMain: () -> Unit,
+    onNavigateToCaughtFish: () -> Unit,
+    onNavigateToLeaderBoard: () -> Unit,
+    onNavigateToProfile: () -> Unit,
+    modifier: Modifier = Modifier
 )
 {
     userViewModel.AddUser("JT4", R.drawable.fishook_logo)
@@ -68,10 +70,10 @@ fun UserProfileScreen(
             Spacer(Modifier.weight(1f))
             Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(5.dp).fillMaxWidth())
             {
-                Button(onClick = { onNavigateToMain }, modifier = Modifier.padding(8.dp)) {
+                Button(onClick = { onNavigateToMain() }, modifier = Modifier.padding(8.dp)) {
                     Text("Back to Map")
                 }
-                Button(onClick = onNavigateToAddFish, modifier = Modifier.padding(8.dp)) {
+                Button(onClick = onNavigateToCaughtFish, modifier = Modifier.padding(8.dp)) {
                     Text("Add Fish")
                 }
 

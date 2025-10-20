@@ -26,6 +26,9 @@ fun LeaderBoardScreen(
     mapViewModel: MapViewModel,
     userViewModel: UserViewModel,
     onNavigateToMain: () -> Unit,
+    onNavigateToCaughtFish: () -> Unit,
+    onNavigateToLeaderBoard: () -> Unit,
+    onNavigateToProfile: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(

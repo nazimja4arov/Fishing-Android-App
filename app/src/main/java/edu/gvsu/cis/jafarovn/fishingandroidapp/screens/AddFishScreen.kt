@@ -17,10 +17,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import edu.gvsu.cis.jafarovn.fishingandroidapp.MapViewModel
+import edu.gvsu.cis.jafarovn.fishingandroidapp.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddFishScreen(modifier: Modifier = Modifier, mapViewModel: MapViewModel, onNavigateToProfile: () -> Unit)
+fun AddFishScreen(
+    mapViewModel: MapViewModel,
+    userViewModel: UserViewModel,
+    onNavigateToMain: () -> Unit,
+    onNavigateToCaughtFish: () -> Unit,
+    onNavigateToLeaderBoard: () -> Unit,
+    onNavigateToProfile: () -> Unit,
+    modifier: Modifier = Modifier
+)
 {
     Scaffold(
         topBar = {
@@ -40,6 +49,9 @@ fun AddFishScreen(modifier: Modifier = Modifier, mapViewModel: MapViewModel, onN
                 Text(text = "This is the Add fish screen")
             }
             Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(12.dp)) {
+                Button(onClick = { onNavigateToMain() }, modifier = Modifier.padding(8.dp)) {
+                    Text("Back to Map")
+                }
                 Button(onClick = onNavigateToProfile, modifier = Modifier.padding(8.dp)) {
                     Text("Back to Profile")
                 }

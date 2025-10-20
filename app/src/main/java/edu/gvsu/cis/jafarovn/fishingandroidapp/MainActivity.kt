@@ -46,20 +46,29 @@ class MainActivity : ComponentActivity() {
                         composable("AddFishScreen") {
                             AddFishScreen(
                                 mapViewModel = mapViewModel,
-                                onNavigateToMain = { navController.navigate("HomeScreen") }
+                                userViewModel = userViewModel,
+                                onNavigateToMain = { navController.navigate("HomeScreen") },
+                                onNavigateToCaughtFish = { navController.navigate("AddFishScreen") },
+                                onNavigateToLeaderBoard = { navController.navigate("LeaderBoardScreen") },
+                                onNavigateToProfile = { navController.navigate("UserProfileScreen") }
                             )
                         }
                         composable("LeaderBoardScreen") {
                             LeaderBoardScreen(
                                 mapViewModel = mapViewModel,
                                 userViewModel = userViewModel,
-                                onNavigateToMain = { navController.navigate("HomeScreen") }
+                                onNavigateToMain = { navController.navigate("HomeScreen") },
+                                onNavigateToCaughtFish = { navController.navigate("AddFishScreen") },
+                                onNavigateToLeaderBoard = { navController.navigate("LeaderBoardScreen") },
+                                onNavigateToProfile = { navController.navigate("UserProfileScreen") }
                             )
                         }
                         composable("UserProfileScreen") {
                             UserProfileScreen(
                                 mapViewModel = mapViewModel,
                                 userViewModel = userViewModel,
+                                onNavigateToCaughtFish = { navController.navigate("AddFishScreen") },
+                                onNavigateToLeaderBoard = { navController.navigate("LeaderBoardScreen") },
                                 onNavigateToProfile = {navController.navigate("UserProfileScreen")},
                                 onNavigateToMain = { navController.navigate("HomeScreen") }
                             )
