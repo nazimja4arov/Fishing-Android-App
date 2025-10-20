@@ -1,9 +1,11 @@
 package edu.gvsu.cis.jafarovn.fishingandroidapp.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,7 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import edu.gvsu.cis.jafarovn.fishingandroidapp.MapViewModel
 import edu.gvsu.cis.jafarovn.fishingandroidapp.R
 import edu.gvsu.cis.jafarovn.fishingandroidapp.UserViewModel
@@ -42,11 +49,10 @@ fun HomeScreen(
         // First Row (for the logo)
         Row (modifier = Modifier
             .background(Color.LightGray)
-            .height(100.dp)
+            .height(175.dp)
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .fillMaxHeight(),
                 contentAlignment = Alignment.Center
             ) {
@@ -57,9 +63,33 @@ fun HomeScreen(
                     contentDescription = "FisHook App Logo",
                 )
             }
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight(),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                Text(
+                    text = "Welcome to FisHook",
+                    style = TextStyle(
+                        fontFamily = FontFamily.Default,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 28.sp
+                    )
+                )
+            }
         }
         Row {
-            Text("Locate Fishing Spots on our Map!")
+            Text(
+                "Locate Fishing Spots with the Map!",
+                textAlign = TextAlign.Center,
+                style = TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontSize = 20.sp
+                ),
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .padding(top = 8.dp),
+            )
         }
         // Second Row (for the map)
         Row {
@@ -69,7 +99,11 @@ fun HomeScreen(
                 Image(
                     painter = painterResource(id = R.drawable.michigan_counties_map),
                     contentDescription = "Map of Michigan counties",
-                    modifier = Modifier.size(400.dp) // Adjusted size for better visibility
+                    modifier = Modifier
+                        .size(400.dp)
+                        .border(
+                            BorderStroke(width = 8.dp, Color.LightGray)
+                        )
                 )
             }
         }

@@ -39,7 +39,7 @@ fun LeaderBoardScreen(
         Row(
             modifier = Modifier
                 .background(Color.LightGray)
-                .height(100.dp)
+                .height(175.dp)
         ) {
             Box(
                 modifier = Modifier
