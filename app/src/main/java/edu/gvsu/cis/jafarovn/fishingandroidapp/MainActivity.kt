@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -26,6 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             FishingAndroidAppTheme {
                 val mapViewModel: MapViewModel = viewModel()
+                val userViewModel: UserViewModel = viewModel()
                 val navController = rememberNavController()
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -37,7 +37,10 @@ class MainActivity : ComponentActivity() {
                         composable("HomeScreen") {
                             HomeScreen(
                                 mapViewModel = mapViewModel,
-                                onNavigateToCaughtFish = { navController.navigate("AddFishScreen") }
+                                userViewModel = userViewModel, // <-- Make sure this line is here
+                                onNavigateToCaughtFish = { navController.navigate("AddFishScreen") },
+                                onNavigateToLeaderBoard = { navController.navigate("LeaderBoardScreen") },
+                                onNavigateToProfile = { navController.navigate("UserProfileScreen") }
                             )
                         }
                         composable("AddFishScreen") {
@@ -49,12 +52,15 @@ class MainActivity : ComponentActivity() {
                         composable("LeaderBoardScreen") {
                             LeaderBoardScreen(
                                 mapViewModel = mapViewModel,
+                                userViewModel = userViewModel,
                                 onNavigateToMain = { navController.navigate("HomeScreen") }
                             )
                         }
                         composable("UserProfileScreen") {
                             UserProfileScreen(
                                 mapViewModel = mapViewModel,
+                                userViewModel = userViewModel,
+                                onNavigateToProfile = {navController.navigate("UserProfileScreen")},
                                 onNavigateToMain = { navController.navigate("HomeScreen") }
                             )
                         }
