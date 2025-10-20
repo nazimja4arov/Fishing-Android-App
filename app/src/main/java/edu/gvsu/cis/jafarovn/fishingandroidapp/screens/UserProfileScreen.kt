@@ -3,10 +3,15 @@
 package edu.gvsu.cis.jafarovn.fishingandroidapp.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -16,6 +21,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import edu.gvsu.cis.jafarovn.fishingandroidapp.MapViewModel
 import edu.gvsu.cis.jafarovn.fishingandroidapp.R
 import edu.gvsu.cis.jafarovn.fishingandroidapp.UserViewModel
@@ -26,7 +32,7 @@ fun UserProfileScreen(
     mapViewModel: MapViewModel,
     onNavigateToMain: () -> Unit,
     userViewModel: UserViewModel,
-    onNavigateToProfile: () -> Unit
+    onNavigateToAddFish: () -> Unit
 )
 {
     userViewModel.AddUser("JT4", R.drawable.fishook_logo)
@@ -44,6 +50,7 @@ fun UserProfileScreen(
             )
         }
         ,content = { innerPadding ->
+            Column {
 
             Row(modifier = Modifier.padding(innerPadding))
             {
@@ -58,17 +65,19 @@ fun UserProfileScreen(
                 }
 
             }
-            /*Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(12.dp)) {
-                Button(onClick = { viewModel.restart() }, modifier = Modifier.padding(8.dp)) {
+            Spacer(Modifier.weight(1f))
+            Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(5.dp).fillMaxWidth())
+            {
+                Button(onClick = { onNavigateToMain }, modifier = Modifier.padding(8.dp)) {
                     Text("Back to Map")
                 }
-                Button(onClick = onNavigateToSettings, modifier = Modifier.padding(8.dp)) {
+                Button(onClick = onNavigateToAddFish, modifier = Modifier.padding(8.dp)) {
                     Text("Add Fish")
                 }
-                Button(onClick = onNavigateToStatistics, modifier = Modifier.padding(8.dp)) {
-                    Text("Statistics")
-                }
-            }*/
+
+            }
+
+            }
         }
     )
 }
