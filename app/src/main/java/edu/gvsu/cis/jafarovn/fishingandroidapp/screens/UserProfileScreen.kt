@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -31,7 +31,8 @@ fun UserProfileScreen(
     modifier: Modifier = Modifier,
     mapViewModel: MapViewModel,
     onNavigateToMain: () -> Unit,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+    onNavigateToAddFish: () -> Unit
 )
 {
     userViewModel.AddUser("JT4", R.drawable.fishook_logo)
@@ -49,6 +50,7 @@ fun UserProfileScreen(
             )
         }
         ,content = { innerPadding ->
+            Column {
 
             Row(modifier = Modifier.padding(innerPadding))
             {
@@ -63,17 +65,19 @@ fun UserProfileScreen(
                 }
 
             }
-            /*Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(12.dp)) {
-                Button(onClick = { viewModel.restart() }, modifier = Modifier.padding(8.dp)) {
+            Spacer(Modifier.weight(1f))
+            Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(5.dp).fillMaxWidth())
+            {
+                Button(onClick = { onNavigateToMain }, modifier = Modifier.padding(8.dp)) {
                     Text("Back to Map")
                 }
-                Button(onClick = onNavigateToSettings, modifier = Modifier.padding(8.dp)) {
+                Button(onClick = onNavigateToAddFish, modifier = Modifier.padding(8.dp)) {
                     Text("Add Fish")
                 }
-                Button(onClick = onNavigateToStatistics, modifier = Modifier.padding(8.dp)) {
-                    Text("Statistics")
-                }
-            }*/
+
+            }
+
+            }
         }
     )
 }
