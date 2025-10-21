@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,7 +42,9 @@ fun HomeScreen(
     onNavigateToLeaderBoard: () -> Unit,
     onNavigateToProfile: () -> Unit,
     modifier: Modifier = Modifier,
-    transparentLightBlue: Color = Color(red = 0f, green = 0.5f, blue = 1f, alpha = 0.25f)
+    transparentLightBlue: Color = Color(red = 0f, green = 0.5f, blue = 1f, alpha = 0.25f),
+    LightBlue: Color = Color(red = 0f, green = 0.5f, blue = 1f, alpha = 0.75f)
+
 ) {
     // Wrap everything in a Column to arrange children vertically
     Column(
@@ -110,7 +113,7 @@ fun HomeScreen(
                     modifier = Modifier
                         .size(400.dp)
                         .border(
-                            BorderStroke(width = 8.dp, Color.LightGray)
+                            BorderStroke(width = 8.dp, color = LightBlue)
                         )
                 )
             }
@@ -123,11 +126,15 @@ fun HomeScreen(
         ) {
             Button(
                 modifier = Modifier
-                    .width(125.dp)
+                    .width(140.dp)
                     .height(75.dp),
-                onClick = { onNavigateToCaughtFish() }
+                onClick = { onNavigateToCaughtFish() },
+                colors = ButtonDefaults.buttonColors(containerColor = LightBlue)
             ) {
-                Text("Add Fish")
+                Text(
+                    "Add Fish",
+                    fontSize = 20.dp.value.sp,
+                    textAlign = TextAlign.Center)
             }
             Image(
                 modifier = Modifier
@@ -139,11 +146,15 @@ fun HomeScreen(
             )
             Button(
                 modifier = Modifier
-                    .width(125.dp)
+                    .width(140.dp)
                     .height(75.dp),
-                onClick = { onNavigateToLeaderBoard() }
+                onClick = { onNavigateToLeaderBoard() },
+                colors = ButtonDefaults.buttonColors(containerColor = LightBlue)
             ) {
-                Text("Leader Board")
+                Text(
+                    "Leader Board",
+                    fontSize = 20.dp.value.sp,
+                    textAlign = TextAlign.Center)
             }
 //            Spacer(
 //                modifier = Modifier.weight(1f)
