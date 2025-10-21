@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,19 +40,21 @@ fun HomeScreen(
     onNavigateToCaughtFish: () -> Unit,
     onNavigateToLeaderBoard: () -> Unit,
     onNavigateToProfile: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    transparentLightBlue: Color = Color(red = 0f, green = 0.5f, blue = 1f, alpha = 0.25f)
 ) {
     // Wrap everything in a Column to arrange children vertically
     Column(
-        modifier = modifier.fillMaxSize(), // Make the column fill the screen
+        modifier = modifier
+            .fillMaxSize()
+            .background(transparentLightBlue),
         horizontalAlignment = Alignment.CenterHorizontally // Center its children horizontally
     ) {
         // First Row (for the logo)
         Column (
             modifier = Modifier
-                .background(Color.LightGray)
                 .height(160.dp) // The height might need adjustment depending on the content
-                .fillMaxWidth() // Column often needs to fill width to center content
+                .fillMaxWidth()
         ) {
             Box(
                 modifier = Modifier
@@ -126,14 +129,14 @@ fun HomeScreen(
             ) {
                 Text("Add Fish")
             }
-            Button(
+            Image(
                 modifier = Modifier
-                    .width(125.dp)
-                    .height(75.dp),
-                onClick = { onNavigateToProfile() }
-            ) {
-                Text("Profile")
-            }
+                    .width(100.dp)
+                    .height(100.dp)
+                    .clickable( onClick = onNavigateToProfile),
+                painter = painterResource(id = R.drawable.frutiger_aero_icon),
+                contentDescription = "FisHook App Logo",
+            )
             Button(
                 modifier = Modifier
                     .width(125.dp)
