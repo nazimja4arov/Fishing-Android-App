@@ -45,8 +45,8 @@ fun AddFishScreen(
 )
 {
     var input_text by remember { mutableStateOf("") }
-    val current_user = userViewModel.users["JT4"]
-    val users_fish_list = userViewModel.fish["JT4"] ?: emptyList()
+    //val current_user = userViewModel.users["JT4"]
+    //val users_fish_list = userViewModel.fish["JT4"] ?: emptyList()
     var fish_message by remember { mutableStateOf("") }
 
     Scaffold(modifier = Modifier.fillMaxSize(),
@@ -67,7 +67,7 @@ fun AddFishScreen(
                 TextField(
                     value = input_text,
                     onValueChange = { user_name_input -> input_text = user_name_input },
-                    label = { Text("Enter Your Username: ") },
+                    label = { Text("Enter Fish Name: ") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(70.dp)
@@ -75,9 +75,9 @@ fun AddFishScreen(
             }
                 Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth())
                 {
-                    Button(onClick = { userViewModel.AddFish("JT4", "Pike",
+                    Button(onClick = { userViewModel.AddFish("JT4", input_text,
                         R.drawable.bass_image, 24, 55)
-                        fish_message = "Pike added to JT4's profile. "
+                        fish_message = "${input_text} added to JT4's profile. "
                     })
                     {
                         Text("Upload Your Fish")
