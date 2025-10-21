@@ -74,7 +74,7 @@ fun UserProfileScreen(
                 title = { Text(text = "${current_user?.userName}") },
                 navigationIcon = {
                     IconButton(onClick = onNavigateToMain) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back to Main")
                     }
                 }
             )
