@@ -14,8 +14,8 @@ class UserViewModel: ViewModel(){
     init {
         AddUser("JT4", R.drawable.app_pfp, "John Turner", 4)
         AddFish("JT4", "Bass", R.drawable.bass_image, 15, 2)
-        AddFish("JT4", "Salmon", R.drawable.bass_image, 17, 13)
-        AddFish("JT4", "Catfish", R.drawable.bass_image, 22, 28)
+        //AddFish("JT4", "Salmon", R.drawable.bass_image, 17, 13)
+        //AddFish("JT4", "Catfish", R.drawable.bass_image, 22, 28)
     }
 
     fun AddUser(user_name: String, user_pic: Int, user_full_name: String, user_rank: Int)
