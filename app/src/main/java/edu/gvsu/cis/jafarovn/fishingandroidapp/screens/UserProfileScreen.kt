@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import edu.gvsu.cis.jafarovn.fishingandroidapp.MapViewModel
 import edu.gvsu.cis.jafarovn.fishingandroidapp.R
 import edu.gvsu.cis.jafarovn.fishingandroidapp.UserViewModel
@@ -115,7 +116,7 @@ fun UserProfileScreen(
                                     .padding(8.dp)
                             ) {
                                 Image(
-                                    painter = painterResource(id = fish.fishImage),
+                                    painter = rememberAsyncImagePainter(fish.fishImage),
                                     contentDescription = fish.fishName,
                                     modifier = Modifier.size(64.dp)
                                 )

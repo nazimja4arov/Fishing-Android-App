@@ -48,8 +48,6 @@ class MainActivity : ComponentActivity() {
                                 mapViewModel = mapViewModel,
                                 userViewModel = userViewModel,
                                 onNavigateToMain = { navController.navigate("HomeScreen") },
-                                onNavigateToCaughtFish = { navController.navigate("AddFishScreen") },
-                                onNavigateToLeaderBoard = { navController.navigate("LeaderBoardScreen") },
                                 onNavigateToProfile = { navController.navigate("UserProfileScreen") }
                             )
                         }

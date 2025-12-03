@@ -11,9 +11,10 @@ class UserViewModel: ViewModel(){
     var fish by mutableStateOf<Map<String, List<FishDataClass>>> (emptyMap())
 
     /// Used For Testing, Delete later
+    val default_image = "android.resource://edu.gvsu.cis.jafarovn.fishingandroidapp/${R.drawable.bass_image}"
     init {
         AddUser("JT4", R.drawable.app_pfp, "John Turner", 4)
-        AddFish("JT4", "Bass", R.drawable.bass_image, 15, 2)
+        AddFish("JT4", "Bass", default_image, 15, 2)
         //AddFish("JT4", "Salmon", R.drawable.bass_image, 17, 13)
         //AddFish("JT4", "Catfish", R.drawable.bass_image, 22, 28)
     }
@@ -27,7 +28,7 @@ class UserViewModel: ViewModel(){
         }
     }
 
-    fun AddFish(user_name: String, fish_name: String, fish_image: Int, fish_length: Int, fish_weight: Int)
+    fun AddFish(user_name: String, fish_name: String, fish_image: String, fish_length: Int, fish_weight: Int)
     {
         val current_fish_list = fish[user_name] ?: emptyList()
         val new_entry = FishDataClass(user_name, fish_name, fish_image,fish_length, fish_weight)
