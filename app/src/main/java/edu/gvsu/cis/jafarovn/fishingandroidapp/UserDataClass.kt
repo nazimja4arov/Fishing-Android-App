@@ -4,5 +4,5 @@ data class UserDataClass (
     val userName: String,
     val userProfilePicture: Int,
     val userFullName: String,
-    val userRank: Int,
+    val userPoints: Int,
 )

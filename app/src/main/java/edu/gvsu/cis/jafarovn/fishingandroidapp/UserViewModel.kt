@@ -19,11 +19,11 @@ class UserViewModel: ViewModel(){
         //AddFish("JT4", "Catfish", R.drawable.bass_image, 22, 28)
     }
 
-    fun AddUser(user_name: String, user_pic: Int, user_full_name: String, user_rank: Int)
+    fun AddUser(user_name: String, user_pic: Int, user_full_name: String, user_points: Int)
     {
         if (user_name !in users)
         {
-            val new_entry = UserDataClass(user_name, user_pic, user_full_name,user_rank)
+            val new_entry = UserDataClass(user_name, user_pic, user_full_name,user_points)
             users += (user_name to new_entry)
         }
     }

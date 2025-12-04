@@ -2,34 +2,21 @@ package edu.gvsu.cis.jafarovn.fishingandroidapp.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import edu.gvsu.cis.jafarovn.fishingandroidapp.MapViewModel
 import edu.gvsu.cis.jafarovn.fishingandroidapp.R
 import edu.gvsu.cis.jafarovn.fishingandroidapp.UserViewModel
@@ -43,77 +30,121 @@ fun LeaderBoardScreen(
     onNavigateToCaughtFish: () -> Unit,
     onNavigateToLeaderBoard: () -> Unit,
     onNavigateToProfile: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    transparentLightBlue: Color = Color(red = 0f, green = 0.5f, blue = 1f, alpha = 0.25f),
+    LightBlue: Color = Color(red = 0f, green = 0.5f, blue = 1f, alpha = 0.75f)
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Leaders") },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateToMain) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back to Main"
-                        )
-                    }
-                }
-            )
-        }
-    ) { innerPadding ->
+    val users_list = userViewModel.users.values
+    val sorted_users = users_list.sortedByDescending { it.userPoints }
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(transparentLightBlue),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        //Header
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
+                .fillMaxWidth()
+                .padding(bottom = 8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Column(
-                modifier = Modifier
-                    .background(Color.LightGray)
-                    .height(160.dp)
-                    .fillMaxWidth()
-            ) {
-                Image(
-                    modifier = Modifier.fillMaxWidth(),
-                    painter = painterResource(id = R.drawable.fishook_logo),
-                    contentDescription = "FisHook App Logo",
+            Image(
+                modifier = Modifier.fillMaxWidth(),
+                painter = painterResource(id = R.drawable.fishook_logo),
+                contentDescription = "FisHook App Logo",
+            )
+
+            Text(
+                text = "Leaderboard",
+                style = TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 28.sp
+                ),
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
+
+        // Leaderboard
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .background(Color.White)
+        ) {
+
+            val jt = userViewModel.users["JT4"]
+
+            val firstRow = Triple(
+                "1",
+                jt?.userName ?: "John Turner",
+                (jt?.userPoints ?: 0).toString()
+            )
+
+            val restRows: List<Triple<String, String, String>> =
+                List(9) { i -> Triple("${i + 2}", "User ${i + 2}", "${1000 - i * 37}") }
+
+            val rows = sorted_users.mapIndexed { index, user ->
+                Triple(
+                    (index + 1).toString(),
+                    user.userName,
+                    user.userPoints.toString()
                 )
             }
 
-            // Content area. table UI only (no business logic). Reading from VM
-            Box(
+            LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.TopStart
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                val jt = userViewModel.users["JT4"]
+                item { LeaderTableHeader() }
 
-                val firstRow = Triple(
-                    /* №   */ "1",
-                    /* User*/ jt?.userName ?: "John Turner",
-                    /* Pts */ (jt?.userRank ?: 0).toString()
-                )
-
-                val restRows: List<Triple<String, String, String>> =
-                    List(9) { i -> Triple("${i + 2}", "User ${i + 2}", "${1000 - i * 37}") }
-
-                val rows = listOf(firstRow) + restRows
-
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    item { LeaderTableHeader() }
-                    items(rows) { (n, user, pts) ->
-                        LeaderTableRow(n = n, user = user, pts = pts)
-                    }
+                items(rows) { (rank, name, points) ->
+                    LeaderTableRow(rank = rank, name = name, points = points)
                 }
+            }
+        }
+
+        // Footer
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+        ) {
+            Button(
+                onClick = { onNavigateToMain() },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .width(140.dp)
+                    .height(75.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = LightBlue)
+            ) {
+                Text("Back to Map", fontSize = 20.sp, textAlign = TextAlign.Center)
+            }
+
+            Button(
+                onClick = onNavigateToProfile,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .width(140.dp)
+                    .height(75.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = LightBlue)
+            )
+            {
+                Text("Back to Profile", fontSize = 20.sp, textAlign = TextAlign.Center)
             }
         }
     }
 }
 
+
+// Leaderboard Composable
 @Composable
 fun LeaderTableHeader() {
     Row(
@@ -121,39 +152,28 @@ fun LeaderTableHeader() {
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
-        Text(
-            "№",
-            style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.weight(0.6f)
-        )
-        Text(
-            "User",
-            style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.weight(1.8f)
-        )
+        Text("Rank", modifier = Modifier.weight(0.6f), fontWeight = FontWeight.Bold)
+        Text("User", modifier = Modifier.weight(1.8f), fontWeight = FontWeight.Bold)
         Text(
             "Points",
-            style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.SemiBold,
-            textAlign = TextAlign.End,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.End
         )
     }
     Divider()
 }
 
 @Composable
-fun LeaderTableRow(n: String, user: String, pts: String) {
+fun LeaderTableRow(rank: String, name: String, points: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
-        Text(n, modifier = Modifier.weight(0.6f))
-        Text(user, modifier = Modifier.weight(1.8f))
-        Text(pts, textAlign = TextAlign.End, modifier = Modifier.weight(1f))
+        Text(rank, modifier = Modifier.weight(0.6f))
+        Text(name, modifier = Modifier.weight(1.8f))
+        Text(points, modifier = Modifier.weight(1f), textAlign = TextAlign.End)
     }
     Divider()
 }
