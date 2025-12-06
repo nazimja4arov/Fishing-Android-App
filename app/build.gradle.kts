@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("kotlin-kapt") // For room
+    id("kotlin-kapt") // For Room
 }
 
 android {
@@ -20,14 +20,20 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        // ключ Google Maps из local.properties (MAPS_API_KEY)
-        manifestPlaceholders["GOOGLE_MAPS_KEY"] =
-            project.findProperty("MAPS_API_KEY") as? String ?: ""
     }
 
     buildTypes {
-        release {
+        // DEBUG key can be stored in github
+        getByName("debug") {
+            manifestPlaceholders["GOOGLE_MAPS_KEY"] =
+                "AIzaSyB5kF7V5UDra-qp56WExr2pT9opZ72iYEU"
+        }
+
+        // RELEASE: local.properties (MAPS_API_KEY)
+        getByName("release") {
+            val mapsKey = project.findProperty("MAPS_API_KEY") as? String ?: ""
+            manifestPlaceholders["GOOGLE_MAPS_KEY"] = mapsKey
+
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
