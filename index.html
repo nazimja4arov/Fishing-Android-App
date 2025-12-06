@@ -1,98 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Fishing Android App – Overview & Tutorial</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <title>Fishook · Fishing Android App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
+<body id="top">
 <header class="site-header">
-  <h1>Fishing Android App</h1>
-  <p class="subtitle">Jetpack Compose Android project tutorial</p>
-<nav>
-  <a href="index.html" class="active">Home</a>
-  <a href="screens.html">Screens</a>
-  <a href="https://github.com/nazimja4arov/Fishing-Android-App" target="_blank">GitHub</a>
-</nav>
+    <h1>Fishing Android App · Made by Tara Barnett, Nazim Jafarov, Ezekiel Turnbough</h1>
+    <nav class="top-nav">
+        <a href="#top">Home</a>
+        <a href="https://github.com/nazimja4arov/Fishing-Android-App" target="_blank" rel="noopener">
+            GitHub Repo
+        </a>
+    </nav>
 </header>
 
-<main class="container">
+<main class="content">
 
-  <!-- PAGE INTRO -->
-  <section>
-    <h2>About the Project</h2>
-    <p>
-      The <strong>Fishing Android App</strong> is a Jetpack Compose application developed by
-      <strong>Tara Barnett, Nazim Jafarov, and Ezekiel Turnbough</strong>.
-      This page explains how to run the project, edit the code, and understand the structure.
-    </p>
-  </section>
+    <!-- Mini table of contents -->
+    <section class="toc">
+        <h2>On this page</h2>
+        <ul>
+            <li><a href="#fishook">Fishook</a></li>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#requirements">Requirements</a></li>
+            <li><a href="#getting-started">Getting Started</a></li>
+            <li><a href="#project-structure">Project Structure</a></li>
+            <li><a href="#screens">Screens</a>
+                <ul>
+                    <li><a href="#home-screen">Home Screen</a></li>
+                    <li><a href="#add-fish-screen">Add Fish Screen</a></li>
+                    <li><a href="#user-profile-screen">User Profile Screen</a></li>
+                    <li><a href="#leaderboard-screen">Leaderboard Screen</a></li>
+                </ul>
+            </li>
+            <li><a href="#conclusions">Conclusions</a></li>
+            <li><a href="#see-also">See Also Section</a></li>
+        </ul>
+    </section>
 
-  <!-- QUICK LINKS -->
-  <section>
-    <h2>Quick Links</h2>
-    <ul>
-      <li><a href="#setup">Setup tutorial</a></li>
-      <li><a href="#project-structure">Project structure</a></li>
-      <li><a href="screens.html">Screen overview</a></li>
-      <li><a href="https://github.com/nazimja4arov/Fishing-Android-App" target="_blank">
-        GitHub Repository
-      </a></li>
-    </ul>
-  </section>
+    <section id="fishook">
+        <h2>Fishook</h2>
+    </section>
 
-  <!-- SETUP TUTORIAL -->
-  <section id="setup">
-    <h2>Setup Tutorial</h2>
-    <p>This guide explains how to clone, run, and modify the app in Android Studio.</p>
+    <section id="overview">
+        <h2>Overview</h2>
+        <p>
+            Fishook is a mobile application that utilizes the Maps SDK to track users’ fishing locations and assign
+            points accordingly. We also incorporated a database to hold the fish information for both the user profile
+            and leaderboard. Fishes will populate your profile once added to the app. Points are assigned to users
+            based on the fish’s length and weight.
+        </p>
+    </section>
 
-    <h3>1. Requirements</h3>
-    <ul>
-      <li>Android Studio installed</li>
-      <li>Git installed</li>
-      <li>Emulator or physical device (API 24+)</li>
-    </ul>
+    <section id="requirements">
+        <h2>Requirements</h2>
+        <p>
+            This application was built using Kotlin in Android Studio, and it requires these dependencies to run the
+            Maps SDK and the Room database, respectively:
+        </p>
+        <pre><code>dependencies {
+    // Google Maps
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.maps.android:maps-compose:2.11.4")
 
-    <h3>2. Clone the Project</h3>
-    <pre><code>git clone https://github.com/nazimja4arov/Fishing-Android-App.git
+    // Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+}</code></pre>
+
+        <p>We use an Android Room database to store the user’s information.</p>
+    </section>
+
+    <section id="getting-started">
+        <h2>Getting Started</h2>
+        <p>This guide explains how to clone, run, and modify the app in Android Studio.</p>
+
+        <h3>1. Requirements</h3>
+        <ul>
+            <li>Android Studio installed</li>
+            <li>Git installed</li>
+            <li>Emulator or physical device (API 24+)</li>
+        </ul>
+
+        <h3>2. Clone the Project</h3>
+        <pre><code>git clone https://github.com/nazimja4arov/Fishing-Android-App.git
 cd Fishing-Android-App</code></pre>
 
-    <h3>3. Open in Android Studio</h3>
-    <ol>
-      <li>Open Android Studio → “Open an existing project”.</li>
-      <li>Wait for Gradle sync to finish.</li>
-      <li>Select an emulator/device and press ▶ Run.</li>
-    </ol>
+        <h3>3. Open in Android Studio</h3>
+        <ul>
+            <li>Open Android Studio &gt; “Open an existing project”.</li>
+            <li>Wait for Gradle sync to finish.</li>
+            <li>Select an emulator/device and press Run.</li>
+        </ul>
 
-    <h3>4. Editing the Code</h3>
-    <ol>
-      <li>Edit screen UI inside <code>screens/</code> folder.</li>
-      <li>Adjust logic and fish data inside ViewModel classes.</li>
-      <li>Re-run the app to see your changes.</li>
-    </ol>
-  </section>
+        <h3>4. Editing the Code</h3>
+        <ul>
+            <li>Edit screen UI inside <code>screens/</code> folder.</li>
+            <li>Adjust logic and fish data inside ViewModel classes.</li>
+            <li>Re-run the app to see your changes.</li>
+        </ul>
+    </section>
 
-  <!-- PROJECT STRUCTURE -->
-  <section id="project-structure">
-    <h2>Project Structure</h2>
-    <ul>
-      <li><strong>screens/</strong> — UI screens built with Jetpack Compose</li>
-      <li><strong>navigation/Route.kt</strong> — sealed class for navigation</li>
-      <li><strong>viewmodel/</strong> — app logic + state (leaderboard, fish list)</li>
-    </ul>
-  </section>
+    <section id="project-structure">
+        <h2>Project Structure</h2>
+        <ul>
+            <li><code>screens/</code> — UI screens built with Jetpack Compose</li>
+            <li><code>navigation/Route.kt</code> — sealed class for navigation</li>
+            <li><code>viewmodel/</code> — app logic + state (leaderboard, fish list)</li>
+        </ul>
+    </section>
+
+    <section id="screens">
+        <h2>Screens</h2>
+
+        <section id="home-screen">
+            <h3>Home Screen</h3>
+
+            <!-- Screenshot placeholder for Home Screen -->
+            <p><strong>Screenshot:</strong> <a href="images/fishookhome.png" target="_blank">View Screenshot</a>
+</p>
+
+            <p>
+                The main screen of the app. You are able to click on different points of the map to see different
+                fishing locations. From here, you can also navigate to all of the other screens of the application.
+            </p>
+
+            <p>
+                To use the Maps SDK, you will need to do the following tutorial from the Google Maps Platform for Maps
+                SDK and create an API key through the Google Maps Platform in Google Cloud:
+            </p>
+            <p>
+                <a href="https://developers.google.com/maps/documentation/android-sdk/config" target="_blank" rel="noopener">
+                    https://developers.google.com/maps/documentation/android-sdk/config
+                </a>
+            </p>
+
+            <p>To find additional information about setting up Maps SDK, navigate to the See Also Section.</p>
+
+            <p>
+                We created our own color scheme for the background using set values to create a hue. If you want to
+                change the overall color of the app, you can change these values to reflect different colors:
+            </p>
+            <pre><code>transparentLightBlue: Color = Color(red = 0f, green = 0.5f, blue = 1f, alpha = 0.25f)
+LightBlue: Color = Color(red = 0f, green = 0.5f, blue = 1f, alpha = 0.75f)</code></pre>
+
+            <p>
+                If you would like to add new users to the app, currently you must add a new user through the
+                <code>seedData()</code> function within the app:
+            </p>
+            <pre><code>private fun seedData() {
+    users = users + ("Guest" to UserDataClass("Guest", R.drawable.app_pfp, "Guest User", basePoints))
+    users = users + ("TARA" to UserDataClass("Tara", R.drawable.app_pfp, "Tara Barnett", 80))
+    users = users + ("ZEKE" to UserDataClass("Zeke", R.drawable.app_pfp, "Zeke Turnbough", 120))
+    users = users + ("NAZIM" to UserDataClass("Nazim", R.drawable.app_pfp, "Nazim Jafarov", 90))
+}</code></pre>
+        </section>
+
+        <section id="add-fish-screen">
+            <h3>Add Fish Screen</h3>
+
+            <!-- Screenshot placeholder for Add Fish Screen -->
+            <p><strong>Screenshot:</strong> <a href="images/fishookaddfish.png" target="_blank">View Screenshot</a></p>
+
+            <p>
+                This screen is used once the user is logged in to add a fish to their collection. Users must input
+                the fish’s name (or general description of the fish if they aren’t familiar with it), the fish’s
+                length (in inches), and the fish’s weight (in pounds). Users can add an image from their gallery
+                to use for their fish; however, if they don’t wish to or don’t have a picture of their catch, a
+                default image will be used.
+            </p>
+            <p>
+                Once the fields have been filled correctly, the fish and all of its data will be added to the list
+                of the user’s catches. Fish are defined as a data class following this format:
+            </p>
+            <pre><code>data class FishDataClass(
+    val userName: String,
+    val fishName: String,
+    val fishImage: String?,
+    val fishLength: Int,
+    val fishWeight: Int
+)</code></pre>
+
+            <p>And fish are added to a user’s profile with this code:</p>
+            <pre><code>fun addFish(name: String, image: String?, length: Int, weight: Int) {
+    val img = image ?: defaultImage
+    val newEntry = FishDataClass(
+        userName = currentUserId,
+        fishName = name,
+        fishImage = img,
+        fishLength = length,
+        fishWeight = weight
+    )
+
+    val updatedList = getCurrentUserFish() + newEntry
+    fish = fish + (currentUserId to updatedList)
+
+    val user = getCurrentUser()
+    if (user != null) {
+        val newPoints = user.userPoints + length + weight * 2
+        users = users + (currentUserId to user.copy(userPoints = newPoints))
+    }
+    viewModelScope.launch {
+        repo.saveFish(
+            FishEntity(
+                userId = currentUserId,
+                name = name,
+                length = length,
+                weight = weight,
+                image = img
+            )
+        )
+    }
+}</code></pre>
+        </section>
+
+        <section id="user-profile-screen">
+            <h3>User Profile Screen</h3>
+
+            <!-- Screenshot placeholder for User Profile Screen -->
+            <p><strong>Screenshot:</strong> <a href="images/fishookuserprofile.png" target="_blank">View Screenshot</a></p>
+
+            <p>
+                This is where users can view their profile and their stats. Your name, profile picture, points,
+                and catches are all visible on the page. Users are defined as a data class following this format:
+            </p>
+            <pre><code>data class UserDataClass(
+    val userName: String,
+    val userProfilePicture: Int,
+    val userFullName: String,
+    val userPoints: Int
+)</code></pre>
+        </section>
+
+        <section id="leaderboard-screen">
+            <h3>Leaderboard Screen</h3>
+
+            <!-- Screenshot placeholder for Leaderboard Screen -->
+            <p><strong>Screenshot:</strong> <a href="images/fishookleaderboard.png" target="_blank">View Screenshot</a></p>
+
+            <p>
+                This screen displays the top scorers who use the app, listed in descending order for simplicity.
+                To get onto the leaderboard, you have to catch a fish, click the add fish button, put in the details,
+                and watch your score go up!
+            </p>
+
+            <p>
+                This screen takes in the user view model to pull in the player stats information for the leaderboard.
+                It also calls the Fish repository, which stores the information for what fish are added to your profile.
+                This also updates the total points for the user based on the fish in the database.
+            </p>
+
+            <p>
+                If you want to change how points are calculated, you would change the calculation for the
+                <code>newPoints</code> variable in this code snippet:
+            </p>
+            <pre><code>val user = getCurrentUser()
+if (user != null) {
+    val newPoints = user.userPoints + length + weight * 2
+    users = users + (currentUserId to user.copy(userPoints = newPoints))
+}</code></pre>
+        </section>
+    </section>
+
+    <section id="conclusions">
+        <h2>Conclusions</h2>
+        <p>
+            Overall, Fishook is a great app that can not only be used to get outdoors but also to connect people locally
+            (and hopefully in the future globally)! For future updates to Fishook, we would like to sync the map location
+            with the Add Fish screen, so that the location information gets saved to the fish repository and user profile.
+            Another future update would include implementing Firebase for users to log in. We’ve learned so much over the
+            past semester and want to say thank you to everyone for a good semester.
+        </p>
+    </section>
+
+    <section id="see-also">
+        <h2>See Also Section</h2>
+        <p>
+            We used a couple of videos to help us with implementing Google Maps SDK. One was from Code Heroes on YouTube
+            to help us when implementing our maps tool into the application:
+        </p>
+        <p>
+            <a href="https://www.youtube.com/watch?v=QVCNTPNy-vs" target="_blank" rel="noopener">
+                https://www.youtube.com/watch?v=QVCNTPNy-vs
+            </a>
+        </p>
+
+        <p>Another was a video on how to restrict API keys for the SDK:</p>
+        <p>
+            <a href="https://www.youtube.com/watch?v=2_HZObVbe-g" target="_blank" rel="noopener">
+                https://www.youtube.com/watch?v=2_HZObVbe-g
+            </a>
+        </p>
+    </section>
 
 </main>
 
 <footer class="site-footer">
-  <p>© <span id="year"></span> Fishing Android App · Made by Tara Barnett, Nazim Jafarov, Ezekiel Turnbough</p>
+    <p>&copy; 2025 Fishook · Fishing Android App</p>
 </footer>
-
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-
 </body>
 </html>

@@ -1,102 +1,228 @@
-/* GLOBAL RESET */
-* {
+/* ========== GLOBAL RESET ========== */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* BODY */
+/* ========== BODY ========== */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #0b1722;
+  background: radial-gradient(circle at top, #1b2a41 0, #050814 55%, #020309 100%);
   color: #f5f7fa;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
-/* LINKS */
+/* ========== LINKS ========== */
 a {
   color: #7cc3ff;
   text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
 a:hover {
-  text-decoration: underline;
+  color: #c2e6ff;
+  text-shadow: 0 0 6px rgba(124, 195, 255, 0.7);
 }
 
-/* HEADER */
+/* ========== HEADER ========== */
 .site-header {
-  background: linear-gradient(135deg, #102a43, #243b53);
-  padding: 1.5rem 1rem;
+  background: linear-gradient(135deg, #0b1b2b, #102a43, #1f4f8b);
+  padding: 1.3 rem 1.2rem 1.4rem;
   text-align: center;
-  border-bottom: 1px solid #1f2933;
+  border-bottom: 1px solid rgba(19, 41, 61, 0.9);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+  position: sticky;
+  top: 100;
+  z-index: 50;
+  backdrop-filter: blur(8px);
 }
 
 .site-header h1 {
   margin: 0;
-  font-size: 1.9rem;
-  font-weight: 600;
+  font-size: clamp(1.6rem, 1.1rem + 1.4vw, 2.1rem);
+  font-weight: 650;
+  letter-spacing: 0.02em;
 }
 
-.subtitle {
-  margin: 0.35rem 0 1rem;
-  font-size: 1rem;
-  color: #d9e2ec;
+/* TOP NAV (Home / GitHub Repo) */
+.top-nav {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
 }
 
-/* NAVIGATION */
-.site-header nav a {
-  margin: 0 0.5rem;
-  padding: 0.3rem 0.8rem;
+.top-nav a {
+  padding: 0.4rem 1.1rem;
   border-radius: 999px;
-  display: inline-block;
   font-size: 0.9rem;
+  border: 1px solid rgba(124, 195, 255, 0.6);
+  background: rgba(9, 24, 40, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
 
-.site-header nav a.active {
+.top-nav a:hover {
   background: #1f7ae0;
-  color: #f5f7fa;
+  box-shadow: 0 0 14px rgba(31, 122, 224, 0.65);
+  transform: translateY(-1px);
 }
 
-/* CONTAINER */
-.container {
-  max-width: 900px;
-  margin: 2rem auto 3rem;
-  padding: 0 1rem;
+/* ========== MAIN CONTENT ========== */
+.content {
+  max-width: 960px;
+  margin: 2.5rem auto 3.5rem;
+  padding: 0 1.5rem;
+  text-align: center;           /* You asked for centered text */
+  animation: floatIn 0.5s ease-out;
 }
 
-/* SECTION SPACING */
-section {
-  margin-bottom: 2rem;
+/* Fancy card-like sections */
+.content section {
+  background: rgba(10, 22, 38, 0.95);
+  border-radius: 18px;
+  padding: 1.6rem 1.9rem;
+  margin-bottom: 1.8rem;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(35, 58, 83, 0.95);
 }
 
-/* CARD COMPONENT */
-.card {
-  background: #102a43;
-  border-radius: 12px;
-  padding: 1.25rem 1.5rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-  border: 1px solid #1d2d3a;
+/* Make the TOC stand out a bit more */
+.toc {
+  background: linear-gradient(135deg, rgba(16, 42, 67, 0.95), rgba(21, 74, 116, 0.95));
+  border: 1px solid rgba(122, 193, 255, 0.65);
 }
 
-/* CODE & PRE */
+/* TITLES */
+.content h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.9rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #e0f2ff;
+}
+
+.content h3 {
+  font-size: 1.15rem;
+  margin: 0.9rem 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #c7e0ff;
+}
+
+/* TEXT */
+.content p {
+  margin-bottom: 0.8rem;
+  color: #dbe2f0;
+}
+
+/* ========== LISTS ========== */
+.content ul {
+  list-style: none;
+  margin: 0.7rem 0 0.8rem;
+  padding-left: 0;
+}
+
+.content li {
+  margin: 0.2rem 0;
+}
+
+/* Pretty bullets */
+.content ul > li::before {
+  content: "•";
+  color: #7cc3ff;
+  margin-right: 0.35rem;
+}
+
+/* TOC LIST STYLE */
+.toc ul {
+  display: inline-block;
+  text-align: left;            /* makes TOC easy to scan */
+}
+
+.toc li {
+  margin: 0.15rem 0;
+}
+
+.toc a {
+  font-size: 0.95rem;
+}
+
+/* nested list (screens) indentation */
+.toc ul ul {
+  margin-top: 0.25rem;
+  padding-left: 1rem;
+  border-left: 1px solid rgba(194, 230, 255, 0.4);
+}
+
+/* ========== CODE BLOCKS ========== */
 pre {
-  background: #102a43;
+  background: #0c1b2a;
   padding: 0.9rem 1.1rem;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow-x: auto;
   border: 1px solid #1d2d3a;
+  margin: 0.8rem auto;
+  max-width: 100%;
+  text-align: left;            /* keep code readable */
 }
 
 code {
   font-family: "Fira Code", Consolas, monospace;
   font-size: 0.95rem;
+  white-space: pre;
+  color: #e0f7ff;
 }
 
-/* FOOTER */
+/* ========== INLINE "SCREENSHOT" LABELS ========== */
+.content p strong {
+  color: #ffdf91;
+}
+
+/* ========== FOOTER ========== */
 .site-footer {
   text-align: center;
-  padding: 1.2rem;
+  padding: 1.3rem;
   border-top: 1px solid #1f2933;
   font-size: 0.9rem;
   color: #9fb3c8;
-  margin-top: 3rem;
+  background: #050914;
+}
+
+/* ========== SMALL SCREEN TWEAKS ========== */
+@media (max-width: 640px) {
+  .content {
+    padding: 0 1rem;
+  }
+
+  .content section {
+    padding: 1.2rem 1.2rem;
+  }
+
+  .site-header h1 {
+    font-size: 1.4rem;
+  }
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
