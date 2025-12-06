@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
@@ -37,6 +38,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
@@ -61,4 +63,13 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.play.services.maps)
+    implementation(libs.google.maps.compose)
+}
+
+secrets {
+    propertiesFileName = "secrets.properties"
+
+    // This file can be checked in version control.
+    defaultPropertiesFileName = "local.defaults.properties"
 }
