@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fishing Android App – Screens</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="site-header">
+  <h1>App Screens Overview</h1>
+  <p class="subtitle">What each screen does in the Android app</p>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="tutorial.html">Tutorial</a>
+    <a href="screens.html" class="active">Screens</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="card">
+    <h2>Home Screen</h2>
+    <p>
+      Entry point of the app. Shows navigation options like
+      “Add Fish” and “Leaderboard”. Implemented as a Compose
+      <code>@Composable</code> with buttons that call your
+      navigation function using the sealed <code>Route</code> class.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Add Fish Screen</h2>
+    <p>
+      Form where the user enters species, weight, location, and maybe
+      a short note. On save, it sends data to a ViewModel which updates
+      the list of catches and, indirectly, the leaderboard.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Leaderboard Screen</h2>
+    <p>
+      Displays a ranking of users by total points (or weight of fish).
+      Uses a LazyColumn in Compose to show rows with rank, user name,
+      and points. Sorting is handled in ViewModel/repository, UI just
+      reads the state.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Tutorial Screen (planned)</h2>
+    <p>
+      Future screen you can add to explain how the app works directly
+      inside the app. It can reuse parts of this website’s text and
+      be reachable from the Home Screen via a new navigation route.
+    </p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>© <span id="year"></span> Fishing Android App</p>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
