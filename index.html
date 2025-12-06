@@ -2,51 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Fishing Android App – Tutorial</title>
+  <title>Fishing Android App – Overview & Tutorial</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
 <header class="site-header">
   <h1>Fishing Android App</h1>
-  <p class="subtitle">Tutorial page for Fishing app project</p>
+  <p class="subtitle">Jetpack Compose Android project tutorial</p>
   <nav>
     <a href="index.html" class="active">Home</a>
-    <a href="tutorial.html">Tutorial</a>
     <a href="screens.html">Screens</a>
+    <a href="https://github.com/nazimja4arov/Fishing-Android-App" target="_blank">GitHub</a>
   </nav>
 </header>
 
 <main class="container">
+
+  <!-- PAGE INTRO -->
   <section>
-    <h2>What is this?</h2>
+    <h2>About the Project</h2>
     <p>
-      This site explains how to run, explore, and extend the <strong>Fishing Android App</strong>.
-      The app is written in <strong>Kotlin</strong> using <strong>Jetpack Compose</strong> and
-      uses an MVVM-style structure with multiple screens (Home, Add Fish, Leaderboard, etc.).
+      The <strong>Fishing Android App</strong> is a Jetpack Compose application developed by
+      <strong>Tara Barnett, Nazim Jafarov, and Ezekiel Turnbough</strong>.
+      This page explains how to run the project, edit the code, and understand the structure.
     </p>
   </section>
 
+  <!-- QUICK LINKS -->
   <section>
     <h2>Quick Links</h2>
     <ul>
-      <li><a href="tutorial.html">Step-by-step setup tutorial</a></li>
-      <li><a href="screens.html">Overview of app screens & navigation</a></li>
-      <li><a href="https://github.com/YOUR_USERNAME/Fishing-Android-App" target="_blank">
-        GitHub repository
+      <li><a href="#setup">Setup tutorial</a></li>
+      <li><a href="#project-structure">Project structure</a></li>
+      <li><a href="screens.html">Screen overview</a></li>
+      <li><a href="https://github.com/nazimja4arov/Fishing-Android-App" target="_blank">
+        GitHub Repository
       </a></li>
     </ul>
   </section>
 
-  <section>
-    <h2>Tech Stack</h2>
+  <!-- SETUP TUTORIAL -->
+  <section id="setup">
+    <h2>Setup Tutorial</h2>
+    <p>This guide explains how to clone, run, and modify the app in Android Studio.</p>
+
+    <h3>1. Requirements</h3>
     <ul>
-      <li>Android Studio (Giraffe+ recommended)</li>
-      <li>Kotlin + Jetpack Compose</li>
-      <li>ViewModel / state hoisting</li>
-      <li>Navigation via sealed <code>Route</code> class</li>
+      <li>Android Studio installed</li>
+      <li>Git installed</li>
+      <li>Emulator or physical device (API 24+)</li>
+    </ul>
+
+    <h3>2. Clone the Project</h3>
+    <pre><code>git clone https://github.com/nazimja4arov/Fishing-Android-App.git
+cd Fishing-Android-App</code></pre>
+
+    <h3>3. Open in Android Studio</h3>
+    <ol>
+      <li>Open Android Studio → “Open an existing project”.</li>
+      <li>Wait for Gradle sync to finish.</li>
+      <li>Select an emulator/device and press ▶ Run.</li>
+    </ol>
+
+    <h3>4. Editing the Code</h3>
+    <ol>
+      <li>Edit screen UI inside <code>screens/</code> folder.</li>
+      <li>Adjust logic and fish data inside ViewModel classes.</li>
+      <li>Re-run the app to see your changes.</li>
+    </ol>
+  </section>
+
+  <!-- PROJECT STRUCTURE -->
+  <section id="project-structure">
+    <h2>Project Structure</h2>
+    <ul>
+      <li><strong>screens/</strong> — UI screens built with Jetpack Compose</li>
+      <li><strong>navigation/Route.kt</strong> — sealed class for navigation</li>
+      <li><strong>viewmodel/</strong> — app logic + state (leaderboard, fish list)</li>
     </ul>
   </section>
+
 </main>
 
 <footer class="site-footer">
@@ -56,5 +93,6 @@
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
+
 </body>
 </html>
