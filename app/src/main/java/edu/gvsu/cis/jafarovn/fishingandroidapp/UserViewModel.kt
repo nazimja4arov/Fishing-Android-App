@@ -11,7 +11,7 @@ class UserViewModel(
     private val repo: FishRepository
 ) : ViewModel() {
 
-    private val currentUserId = "JT4"
+    private val currentUserId = "Guest"
     private val basePoints = 0
 
     var users by mutableStateOf<Map<String, UserDataClass>>(emptyMap())
@@ -105,7 +105,7 @@ class UserViewModel(
     }
 
     private fun seedData() {
-        users = users + ("JT4" to UserDataClass("JT4", R.drawable.app_pfp, "John Turner", basePoints))
+        users = users + ("Guest" to UserDataClass("Guest", R.drawable.app_pfp, "Guest User", basePoints))
         users = users + ("TARA" to UserDataClass("Tara", R.drawable.app_pfp, "Tara Barnett", 80))
         users = users + ("ZEKE" to UserDataClass("Zeke", R.drawable.app_pfp, "Zeke Turnbough", 120))
         users = users + ("NAZIM" to UserDataClass("Nazim", R.drawable.app_pfp, "Nazim Jafarov", 90))
