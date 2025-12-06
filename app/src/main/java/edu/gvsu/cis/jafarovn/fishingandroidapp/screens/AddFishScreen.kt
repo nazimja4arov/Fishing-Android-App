@@ -59,29 +59,28 @@ fun AddFishScreen(
     var length_validation by remember { mutableStateOf("") }
     var weight_validation by remember { mutableStateOf("") }
 
-    //val current_user = userViewModel.users["JT4"]
-    //val users_fish_list = userViewModel.fish["JT4"] ?: emptyList()
     var fish_message by remember { mutableStateOf("") }
 
     val input_fish_image = remember { mutableStateOf<Uri?>(null) }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? -> input_fish_image.value = uri }
+    ) { uri ->
+        input_fish_image.value = uri
+    }
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(transparentLightBlue),
         horizontalAlignment = Alignment.CenterHorizontally
-    )
-    {
+    ) {
+
         Column(
             modifier = Modifier
                 .height(160.dp)
                 .fillMaxWidth()
-        )
-        {
+        ) {
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -89,8 +88,7 @@ fun AddFishScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     painter = painterResource(id = R.drawable.fishook_logo),
                     contentDescription = "FisHook App Logo",
                 )
@@ -112,79 +110,71 @@ fun AddFishScreen(
                 )
             }
         }
-        // Column for text fields
+
+        // INPUT FIELDS
+
         Column {
-            Row(modifier = Modifier.padding())
-            {
-                Column() {
+            Row(modifier = Modifier.padding()) {
+                Column {
+
                     TextField(
                         value = input_fish_name,
                         onValueChange = { input_fish_name = it },
-                        label = { Text("Enter Fish Name: ") },
+                        label = { Text("Fish Name") },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(90.dp)
                             .padding(12.dp)
                     )
                     if (name_validation.isNotEmpty()) {
                         Text(
                             text = name_validation,
                             color = Color.Red,
-                            fontSize = 12.sp,
-                            modifier = Modifier.padding(start = 12.dp)
+                            fontSize = 12.sp
                         )
                     }
+
                     TextField(
                         value = input_fish_length,
                         onValueChange = { input_fish_length = it },
-                        label = { Text("Enter Fish Length (Inches): ") },
+                        label = { Text("Length (inches)") },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(90.dp)
                             .padding(12.dp)
                     )
                     if (length_validation.isNotEmpty()) {
-                        Text(
-                            text = length_validation,
-                            color = Color.Red,
-                            fontSize = 12.sp,
-                            modifier = Modifier.padding(start = 12.dp)
-                        )
+                        Text(text = length_validation, color = Color.Red, fontSize = 12.sp)
                     }
+
                     TextField(
                         value = input_fish_weight,
                         onValueChange = { input_fish_weight = it },
-                        label = { Text("Enter Fish Weight (Pounds): ") },
+                        label = { Text("Weight (lbs)") },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(90.dp)
                             .padding(12.dp)
                     )
                     if (weight_validation.isNotEmpty()) {
-                        Text(
-                            text = weight_validation,
-                            color = Color.Red,
-                            fontSize = 12.sp,
-                            modifier = Modifier.padding(start = 12.dp)
-                        )
+                        Text(text = weight_validation, color = Color.Red, fontSize = 12.sp)
                     }
                 }
             }
-                // Row used for buttons
+
+            // BUTTONS --------------------------------------------------------
+
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-                    Button(modifier = Modifier
-                        .width(140.dp)
-                        .height(75.dp),
-                        onClick = { launcher.launch("image/*")},
-                        colors = ButtonDefaults.buttonColors(containerColor = LightBlue)) {
-                        Text("Import Image", fontSize = 20.dp.value.sp,
-                            textAlign = TextAlign.Center)
-
+                    Button(
+                        modifier = Modifier
+                            .width(140.dp)
+                            .height(75.dp),
+                        onClick = { launcher.launch("image/*") },
+                        colors = ButtonDefaults.buttonColors(containerColor = LightBlue)
+                    ) {
+                        Text("Import Image", fontSize = 20.sp)
                     }
 
                     input_fish_image.value?.let { uri ->
@@ -193,102 +183,95 @@ fun AddFishScreen(
                             contentDescription = "Selected Image",
                             modifier = Modifier
                                 .padding(12.dp)
-                                .height(200.dp)
                                 .fillMaxWidth()
+                                .height(200.dp)
                         )
                     }
 
                     Button(
                         modifier = Modifier
                             .width(140.dp)
-                            .height(75.dp).padding(top = 16.dp),
+                            .height(75.dp)
+                            .padding(top = 16.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = LightBlue),
                         onClick = {
+
+                            // VALIDATION
                             name_validation = ""
                             length_validation = ""
                             weight_validation = ""
-                            var error_occured = false
 
-                            // Error checking and input validation
+                            var error = false
+
                             if (input_fish_name.isBlank()) {
-                                name_validation = "Fish name cannot be empty"
-                                error_occured = true
+                                name_validation = "Name cannot be empty"
+                                error = true
                             }
 
-                            val length_to_int = input_fish_length.toIntOrNull()
-                            if (input_fish_length.isBlank()) {
-                                length_validation = "Fish length is required"
-                                error_occured = true
-                            }
-                            else if (length_to_int == null || length_to_int <= 0) {
-                                length_validation = "Fish length must be a positive number"
-                                error_occured = true
+                            val len = input_fish_length.toIntOrNull()
+                            if (len == null || len <= 0) {
+                                length_validation = "Length must be positive"
+                                error = true
                             }
 
-                            val weight_to_int = input_fish_weight.toIntOrNull()
-                            if (input_fish_weight.isBlank()) {
-                                weight_validation = "Fish weight is required"
-                                error_occured = true
-                            } else if (weight_to_int == null || weight_to_int <= 0) {
-                                weight_validation = "Fish weight must be a positive number"
-                                error_occured = true
+                            val wt = input_fish_weight.toIntOrNull()
+                            if (wt == null || wt <= 0) {
+                                weight_validation = "Weight must be positive"
+                                error = true
                             }
 
-                            // If an image isn't chosen, use the default image
-                            if (!error_occured) {
-                                val chosen_fish_image = input_fish_image.value?.toString()
-                                    ?: "android.resource://edu.gvsu.cis.jafarovn.fishingandroidapp/${R.drawable.bass_image}"
+                            if (!error) {
+                                val chosenImage = input_fish_image.value?.toString()
 
-                                userViewModel.AddFish(
-                                    "JT4",
-                                    input_fish_name,
-                                    chosen_fish_image,
-                                    input_fish_length.toInt(),
-                                    input_fish_weight.toInt()
+                                // NEW API — Logic inside ViewModel
+                                userViewModel.addFish(
+                                    name = input_fish_name,
+                                    image = chosenImage,
+                                    length = len!!,
+                                    weight = wt!!
                                 )
 
-                                fish_message = "$input_fish_name added for JT4."
+                                fish_message = "Fish '${input_fish_name}' added!"
                             }
                         },
                     ) {
-                        Text("Upload Your Fish", fontSize = 20.dp.value.sp,
-                            textAlign = TextAlign.Center)
+                        Text("Upload Fish", fontSize = 20.sp)
                     }
 
-                    // Confirmation message
                     if (fish_message.isNotEmpty()) {
-                        Text(
-                            text = fish_message,
-                            modifier = Modifier.padding(top = 8.dp)
-                        )
+                        Text(fish_message, modifier = Modifier.padding(top = 8.dp))
                     }
 
                     Spacer(Modifier.weight(1f))
 
-                    // Bottom navigation buttons
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .padding(12.dp)
                             .fillMaxWidth()
                     ) {
-                        Button( modifier = Modifier
-                            .width(140.dp)
-                            .height(75.dp).padding(8.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = LightBlue), onClick = onNavigateToMain) {
-                            Text("Back to Map", fontSize = 20.dp.value.sp,
-                                textAlign = TextAlign.Center)
+                        Button(
+                            modifier = Modifier
+                                .width(140.dp)
+                                .height(75.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = LightBlue),
+                            onClick = onNavigateToMain
+                        ) {
+                            Text("Back to Map", fontSize = 20.sp)
                         }
-                        Button(modifier = Modifier
-                            .width(140.dp)
-                            .height(75.dp).padding(8.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = LightBlue), onClick = onNavigateToProfile) {
-                            Text("Back to Profile", fontSize = 20.dp.value.sp,
-                                textAlign = TextAlign.Center)
+
+                        Button(
+                            modifier = Modifier
+                                .width(140.dp)
+                                .height(75.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = LightBlue),
+                            onClick = onNavigateToProfile
+                        ) {
+                            Text("Back to Profile", fontSize = 20.sp)
                         }
                     }
                 }
             }
         }
     }
-    }
+}

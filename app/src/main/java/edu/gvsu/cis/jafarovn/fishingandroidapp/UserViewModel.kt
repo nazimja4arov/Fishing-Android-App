@@ -4,38 +4,110 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
-class UserViewModel: ViewModel(){
-    var users by mutableStateOf<Map<String, UserDataClass>> (emptyMap())
+class UserViewModel(
+    private val repo: FishRepository
+) : ViewModel() {
 
-    var fish by mutableStateOf<Map<String, List<FishDataClass>>> (emptyMap())
+    private val currentUserId = "JT4"
+    private val basePoints = 0
 
-    /// Used For Testing, Delete later
-    val default_image = "android.resource://edu.gvsu.cis.jafarovn.fishingandroidapp/${R.drawable.bass_image}"
+    var users by mutableStateOf<Map<String, UserDataClass>>(emptyMap())
+        private set
+
+    var fish by mutableStateOf<Map<String, List<FishDataClass>>>(emptyMap())
+        private set
+
+    val defaultImage: String =
+        "android.resource://edu.gvsu.cis.jafarovn.fishingandroidapp/${R.drawable.bass_image}"
+
     init {
-        AddUser("JT4", R.drawable.app_pfp, "John Turner", 4)
-        AddFish("JT4", "Bass", default_image, 15, 2)
-        //AddFish("JT4", "Salmon", R.drawable.bass_image, 17, 13)
-        //AddFish("JT4", "Catfish", R.drawable.bass_image, 22, 28)
+        seedData()
+        loadFish()
     }
 
-    fun AddUser(user_name: String, user_pic: Int, user_full_name: String, user_points: Int)
-    {
-        if (user_name !in users)
-        {
-            val new_entry = UserDataClass(user_name, user_pic, user_full_name,user_points)
-            users += (user_name to new_entry)
+    fun getCurrentUser(): UserDataClass? = users[currentUserId]
+
+    fun getCurrentUserFish(): List<FishDataClass> = fish[currentUserId] ?: emptyList()
+
+    fun addFish(name: String, image: String?, length: Int, weight: Int) {
+        val img = image ?: defaultImage
+
+        val newEntry = FishDataClass(
+            userName = currentUserId,
+            fishName = name,
+            fishImage = img,
+            fishLength = length,
+            fishWeight = weight
+        )
+
+        val updatedList = getCurrentUserFish() + newEntry
+        fish = fish + (currentUserId to updatedList)
+
+        val user = getCurrentUser()
+        if (user != null) {
+            val newPoints = user.userPoints + length + weight * 2
+            users = users + (currentUserId to user.copy(userPoints = newPoints))
+        }
+
+        viewModelScope.launch {
+            repo.saveFish(
+                FishEntity(
+                    userId = currentUserId,
+                    name = name,
+                    length = length,
+                    weight = weight,
+                    image = img
+                )
+            )
         }
     }
 
-    fun AddFish(user_name: String, fish_name: String, fish_image: String, fish_length: Int, fish_weight: Int)
-    {
-        val current_fish_list = fish[user_name] ?: emptyList()
-        val new_entry = FishDataClass(user_name, fish_name, fish_image,fish_length, fish_weight)
-        fish += (user_name to (current_fish_list + new_entry))
+    private fun loadFish() {
+        viewModelScope.launch {
+            val list = repo.loadFish(currentUserId)
+
+            val mapped = list.map {
+                FishDataClass(
+                    userName = it.userId,
+                    fishName = it.name,
+                    fishImage = it.image,
+                    fishLength = it.length,
+                    fishWeight = it.weight
+                )
+            }
+
+            fish = fish + (currentUserId to mapped)
+
+            val extraPoints = mapped.sumOf { it.fishLength + it.fishWeight * 2 }
+
+            val baseUser = users[currentUserId]
+            if (baseUser != null) {
+                val updatedUser = baseUser.copy(userPoints = basePoints + extraPoints)
+                users = users + (currentUserId to updatedUser)
+            }
+        }
     }
-    fun GetUserFish(user_name: String): List<FishDataClass>
-    {
-        return fish[user_name] ?: emptyList()
+
+    fun resetCurrentUserData() {
+        viewModelScope.launch {
+            repo.clearFishForUser(currentUserId)
+        }
+
+        fish = fish - currentUserId
+
+        val user = users[currentUserId]
+        if (user != null) {
+            users = users + (currentUserId to user.copy(userPoints = basePoints))
+        }
+    }
+
+    private fun seedData() {
+        users = users + ("JT4" to UserDataClass("JT4", R.drawable.app_pfp, "John Turner", basePoints))
+        users = users + ("TARA" to UserDataClass("Tara", R.drawable.app_pfp, "Tara Barnett", 80))
+        users = users + ("ZEKE" to UserDataClass("Zeke", R.drawable.app_pfp, "Zeke Turnbough", 120))
+        users = users + ("NAZIM" to UserDataClass("Nazim", R.drawable.app_pfp, "Nazim Jafarov", 90))
     }
 }

@@ -7,11 +7,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.gvsu.cis.jafarovn.fishingandroidapp.screens.AddFishScreen
 import edu.gvsu.cis.jafarovn.fishingandroidapp.screens.HomeScreen
 import edu.gvsu.cis.jafarovn.fishingandroidapp.screens.LeaderBoardScreen
@@ -22,10 +23,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             FishingAndroidAppTheme {
+
                 val mapViewModel: MapViewModel = viewModel()
-                val userViewModel: UserViewModel = viewModel()
+
+                val repo = remember { FishRepository(applicationContext) }
+                val userViewModel = remember { UserViewModel(repo) }
+
                 val navController = rememberNavController()
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -34,15 +40,17 @@ class MainActivity : ComponentActivity() {
                         startDestination = "HomeScreen",
                         modifier = Modifier.padding(innerPadding)
                     ) {
+
                         composable("HomeScreen") {
                             HomeScreen(
                                 mapViewModel = mapViewModel,
-                                userViewModel = userViewModel, // <-- Make sure this line is here
+                                userViewModel = userViewModel,
                                 onNavigateToCaughtFish = { navController.navigate("AddFishScreen") },
                                 onNavigateToLeaderBoard = { navController.navigate("LeaderBoardScreen") },
                                 onNavigateToProfile = { navController.navigate("UserProfileScreen") }
                             )
                         }
+
                         composable("AddFishScreen") {
                             AddFishScreen(
                                 mapViewModel = mapViewModel,
@@ -51,6 +59,7 @@ class MainActivity : ComponentActivity() {
                                 onNavigateToProfile = { navController.navigate("UserProfileScreen") }
                             )
                         }
+
                         composable("LeaderBoardScreen") {
                             LeaderBoardScreen(
                                 mapViewModel = mapViewModel,
@@ -61,13 +70,14 @@ class MainActivity : ComponentActivity() {
                                 onNavigateToProfile = { navController.navigate("UserProfileScreen") }
                             )
                         }
+
                         composable("UserProfileScreen") {
                             UserProfileScreen(
                                 mapViewModel = mapViewModel,
                                 userViewModel = userViewModel,
                                 onNavigateToCaughtFish = { navController.navigate("AddFishScreen") },
                                 onNavigateToLeaderBoard = { navController.navigate("LeaderBoardScreen") },
-                                onNavigateToProfile = {navController.navigate("UserProfileScreen")},
+                                onNavigateToProfile = { navController.navigate("UserProfileScreen") },
                                 onNavigateToMain = { navController.navigate("HomeScreen") }
                             )
                         }
