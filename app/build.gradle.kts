@@ -2,11 +2,12 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("kotlin-kapt")
+    id("kotlin-kapt") // For room
 }
 
 android {
     namespace = "edu.gvsu.cis.jafarovn.fishingandroidapp"
+
     compileSdk {
         version = release(36)
     }
@@ -19,6 +20,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // ключ Google Maps из local.properties (MAPS_API_KEY)
+        manifestPlaceholders["GOOGLE_MAPS_KEY"] =
+            project.findProperty("MAPS_API_KEY") as? String ?: ""
     }
 
     buildTypes {
@@ -30,13 +35,16 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
     }
@@ -54,6 +62,19 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.compose.foundation.layout)
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
+    // Google Maps
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.maps.android:maps-compose:2.11.4")
+
+    // Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -61,10 +82,4 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-    implementation("io.coil-kt:coil-compose:2.4.0")
-
-    // --- Room ---  To support Database system
-    implementation("androidx.room:room-runtime:2.6.1")
-    kapt("androidx.room:room-compiler:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
 }
